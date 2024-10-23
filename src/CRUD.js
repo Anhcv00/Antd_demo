@@ -1,14 +1,21 @@
-import { Form, Input, Button, Alert, Table } from "antd";
-import React, { useState } from "react";
-import { SearchOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { Form, Input, Button, Alert, Table, Modal } from "antd";
+import {
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import Ribbon from "antd/es/badge/Ribbon";
 
 const CRUD = () => {
-  const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(3);
+  const [pageSize, setPageSize] = useState(5);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hoveredRowId, setHoveredRowId] = useState(null);
+  const [form] = Form.useForm();
 
   const ageFilterOptions = [
     { text: "10-20", value: "10-20" },
@@ -97,28 +104,71 @@ const CRUD = () => {
   ]);
 
   const columns = [
-    { key: "1", title: "ID", dataIndex: "id", sorter: (a, b) => a.id - b.id },
+    {
+      key: "1",
+      title: "ID",
+      dataIndex: "id",
+      width: 100,
+      sorter: (a, b) => a.id - b.id,
+    },
     Table.EXPAND_COLUMN,
     {
       key: "2",
       title: "Name",
       dataIndex: "name",
-      // sorter: (a, b) => a.name.localeCompare(b.name),
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
+      width: 200,
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+        close,
+      }) => {
         return (
-          <Input
-            autoFocus
-            placeholder="Search by name"
-            value={selectedKeys}
-            onChange={(e) => {
-              setSelectedKeys(e.target.value ? [e.target.value] : []);
-            }}
-            onPressEnter={() => {
-              confirm();
-            }}
-            onBlur={() => {
-              confirm();
-            }}></Input>
+          <>
+            <Input
+              autoFocus
+              placeholder="Search by name"
+              value={selectedKeys}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() => {
+                confirm();
+              }}
+              onBlur={() => {
+                confirm();
+              }}></Input>
+            <Button
+              icon={<SearchOutlined />}
+              onClick={() => {
+                confirm();
+              }}
+              color="primary"
+              variant="solid">
+              Search
+            </Button>
+            <Button
+              onClick={() => {
+                clearFilters();
+              }}
+              variant="solid"
+              color="danger">
+              Reset
+            </Button>
+            <Button
+              style={{
+                flex: "right",
+              }}
+              variant="solid"
+              color="danger"
+              onClick={() => {
+                close();
+              }}>
+              close
+            </Button>
+          </>
         );
       },
       filterIcon: () => {
@@ -131,7 +181,7 @@ const CRUD = () => {
       key: "3",
       title: "Age",
       dataIndex: "age",
-      // sorter: (a, b) => a.age - b.age,
+      width: 150,
       filters: ageFilterOptions,
       onFilter: (value, record) => {
         if (value === "10-20") {
@@ -144,26 +194,43 @@ const CRUD = () => {
         return false;
       },
     },
-    { key: "4", title: "Email", dataIndex: "email" },
+    { key: "4", title: "Email", dataIndex: "email", width: 300 },
     {
       key: "5",
-      title: "Action",
+      title: "",
+      width: 100,
       render: (text, record) => (
-        <>
-          <Button
-            onClick={() => {
-              setEditingStudent(record);
-              setIsEditing(true);
-            }}>
-            Update
-          </Button>
-          <Button onClick={() => handleDelete(record.id)} type="danger">
-            Delete
-          </Button>
-        </>
+        <div style={{ display: hoveredRowId === record.id ? "flex" : "none" }}>
+          <EditOutlined
+            onClick={() => openModal(record)}
+            style={{ marginRight: 8, color: "#08c", cursor: "pointer" }}
+          />
+          <DeleteOutlined
+            onClick={() => handleDelete(record.id)}
+            style={{ color: "#ff4d4f", cursor: "pointer" }}
+          />
+        </div>
       ),
     },
   ];
+
+  const openModal = (student) => {
+    if (student) {
+      setEditingStudent(student);
+      setIsEditing(true);
+      form.setFieldsValue(student);
+    } else {
+      setEditingStudent(null);
+      setIsEditing(false);
+      form.resetFields();
+    }
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => form.resetFields(), 200);
+  };
 
   const onFinish = (values) => {
     const newStudent = {
@@ -171,9 +238,11 @@ const CRUD = () => {
       name: values.name,
       age: parseInt(values.age),
       email: values.email,
+      description: values.description,
     };
     setStudents([...students, newStudent]);
-    setIsAdding(false);
+    setIsModalOpen(false);
+    form.resetFields();
   };
 
   const onFinishUpdate = (values) => {
@@ -184,93 +253,112 @@ const CRUD = () => {
             name: values.name,
             age: values.age,
             email: values.email,
+            description: values.description,
           }
         : student
     );
-
     setStudents(updatedStudents);
-    setIsEditing(false);
-    setEditingStudent(null);
+    setIsModalOpen(false);
+    form.resetFields();
   };
 
   const handleDelete = (id) => {
-    alert("Are you sure you want to delete this student?");
-    const filteredStudents = students.filter((student) => student.id !== id);
-    setStudents(filteredStudents);
+    if (window.confirm("Bạn có muốn xóa học sinh này không?")) {
+      setStudents(students.filter((student) => student.id !== id));
+    }
+  };
+  const handleRowMouseEnter = (id) => {
+    setHoveredRowId(id);
+  };
+
+  const handleRowMouseLeave = () => {
+    setHoveredRowId(null);
   };
 
   return (
     <div className="Form_CRUD">
-      {!isAdding && !isEditing && (
-        <Button style={{ marginBottom: 24 }} onClick={() => setIsAdding(true)}>
-          Add a new student
-        </Button>
-      )}
+      <Button style={{ marginBottom: 24 }} onClick={() => openModal()}>
+        Thêm học sinh mới
+      </Button>
+      <Modal
+        title={isEditing ? "Cập nhật học sinh" : "Thêm học sinh mới"}
+        open={isModalOpen}
+        onCancel={closeModal}
+        footer={null}>
+        {showAlert && (
+          <Alert
+            type="error"
+            message="Error"
+            description="Có lỗi xảy ra trong quá trình xử lý"
+            className="AlertAlert"
+            onClose={() => setShowAlert(false)}
+            closable
+          />
+        )}
+        <Form
+          form={form}
+          onFinish={isEditing ? onFinishUpdate : onFinish}
+          initialValues={isEditing ? editingStudent : {}}>
+          <Form.Item
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+            label="Họ tên"
+            name="name"
+            rules={[{ required: true, message: "Nhập tên.... !" }]}>
+            <Input placeholder="Nhập họ tên..." />
+          </Form.Item>
 
-      {(isAdding || isEditing) && (
-        <div className="form_add" style={{ width: 400, margin: `0 auto` }}>
-          {showAlert && (
-            <Alert
-              type="error"
-              message="Error"
-              description="There was an error on login"
-              className="AlertAlert"
-              onClose={() => setShowAlert(false)}
-              closable
-            />
-          )}
+          <Form.Item
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+            label="Email"
+            name="email"
+            htmlType="email"
+            rules={[{ required: true, message: "Nhập email.... !" }]}>
+            <Input placeholder="Nhập email..." />
+          </Form.Item>
 
-          <Form
-            onFinish={isEditing ? onFinishUpdate : onFinish}
-            initialValues={isEditing ? editingStudent : {}}>
-            <Form.Item
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              label="Họ tên"
-              name="name"
-              rules={[{ required: true, message: "Nhập tên.... !" }]}>
-              <Input placeholder="Nhập họ tên..." />
-            </Form.Item>
+          <Form.Item
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+            label="Tuổi"
+            name="age"
+            rules={[{ required: true, message: "Nhập tuổi.... !" }]}>
+            <Input placeholder="Nhập tuổi..." type="number" />
+          </Form.Item>
 
-            <Form.Item
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: "Nhập email.... !" }]}>
-              <Input placeholder="Nhập email..." />
-            </Form.Item>
+          <Form.Item
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+            label="Description"
+            name="description"
+            htmlType="description"
+            rules={[{ required: true, message: "Nhập mô tả.... !" }]}>
+            <Input placeholder="Nhập mô tả..." />
+          </Form.Item>
 
-            <Form.Item
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              label="Age"
-              name="age"
-              rules={[{ required: true, message: "Nhập tuổi.... !" }]}>
-              <Input placeholder="Nhập tuổi..." type="number" />
-            </Form.Item>
-
-            <Button htmlType="submit" type="primary" block>
-              {isEditing ? "Cập nhật" : "Thêm mới"}
-            </Button>
-
-            <Button
-              onClick={() => {
-                setIsAdding(false);
-                setIsEditing(false);
-                setEditingStudent(null);
-              }}
-              type="default"
-              block>
-              Cancel
-            </Button>
-          </Form>
-        </div>
-      )}
+          <Button htmlType="submit" type="primary" block>
+            {isEditing ? "Cập nhật" : "Thêm mới"}
+          </Button>
+        </Form>
+      </Modal>
 
       <Table
-        columns={columns}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: 24,
+        }}
         dataSource={students}
+        columns={columns}
+        rowKey="id"
+        onRow={(record) => ({
+          onMouseEnter: () => handleRowMouseEnter(record.id),
+          onMouseLeave: handleRowMouseLeave,
+        })}
+        rowClassName={(record) =>
+          hoveredRowId === record.id ? "hovered-row" : ""
+        }
         expandable={{
           expandedRowRender: (record) => (
             <p
@@ -297,4 +385,6 @@ const CRUD = () => {
     </div>
   );
 };
+
 export default CRUD;
+const { Search } = Input;
