@@ -1,5 +1,6 @@
 import { Form, Input, Button, Alert, Table } from "antd";
 import React, { useState } from "react";
+import { SearchOutlined } from "@ant-design/icons";
 
 const CRUD = () => {
   const [isAdding, setIsAdding] = useState(false);
@@ -21,82 +22,116 @@ const CRUD = () => {
       name: "John",
       age: 25,
       email: "john@example.com",
+      description: "John is a 25-year-old man.",
     },
     {
       id: 2,
       name: "Sarah",
       age: 22,
       email: "sarah@example.com",
+      description: "Sarah is a 22-year-old woman.",
     },
     {
       id: 3,
       name: "David",
       age: 30,
       email: "david@example.com",
+      description: "David is a 30-year-old man.",
     },
     {
       id: 4,
       name: "Emily",
       age: 28,
       email: "emily@example.com",
+      description: "Emily is a 28-year-old woman.",
     },
     {
       id: 5,
       name: "Michael",
       age: 35,
       email: "michael@example.com",
+      description: "Michael is a 35-year-old man.",
     },
     {
       id: 6,
       name: "Emma",
       age: 27,
       email: "emma@example.com",
+      description: "Emma is a 27-year-old woman.",
     },
     {
       id: 7,
       name: "Daniel",
       age: 26,
       email: "daniel@example.com",
+      description: "Daniel is a 26-year-old man.",
     },
     {
       id: 8,
       name: "Sophia",
       age: 24,
       email: "sophia@example.com",
+      description: "Sophia is a 24-year-old woman.",
     },
     {
       id: 9,
       name: "James",
       age: 31,
       email: "james@example.com",
+      description: "James is a 31-year-old man.",
     },
     {
       id: 10,
       name: "Olivia",
       age: 29,
       email: "olivia@example.com",
+      description: "Olivia is a 29-year-old woman.",
     },
     {
       id: 11,
       name: "Henry",
       age: 32,
       email: "henry@example.com",
+      description: "Henry is a 32-year-old man.",
     },
   ]);
 
   const columns = [
     { key: "1", title: "ID", dataIndex: "id", sorter: (a, b) => a.id - b.id },
+    Table.EXPAND_COLUMN,
     {
       key: "2",
       title: "Name",
       dataIndex: "name",
-      sorter: (a, b) => a.name.localeCompare(b.name),
+      // sorter: (a, b) => a.name.localeCompare(b.name),
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
+        return (
+          <Input
+            autoFocus
+            placeholder="Search by name"
+            value={selectedKeys}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [e.target.value] : []);
+            }}
+            onPressEnter={() => {
+              confirm();
+            }}
+            onBlur={() => {
+              confirm();
+            }}></Input>
+        );
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value, record) =>
+        record.name.toLowerCase().includes(value.toLowerCase()),
     },
     {
       key: "3",
       title: "Age",
       dataIndex: "age",
-      sorter: (a, b) => a.age - b.age,
+      // sorter: (a, b) => a.age - b.age,
       filters: ageFilterOptions,
       onFilter: (value, record) => {
         if (value === "10-20") {
@@ -236,6 +271,18 @@ const CRUD = () => {
       <Table
         columns={columns}
         dataSource={students}
+        expandable={{
+          expandedRowRender: (record) => (
+            <p
+              style={{
+                margin: 0,
+                padding: "0 16px",
+              }}>
+              {record.description}
+            </p>
+          ),
+          rowExpandable: (record) => record.name !== "Not Expandable",
+        }}
         pagination={{
           current: page,
           pageSize: pageSize,
