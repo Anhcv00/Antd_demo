@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Alert, Table, Modal } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Alert,
+  Table,
+  Modal,
+  Divider,
+  Checkbox,
+} from "antd";
 import {
   SearchOutlined,
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import Ribbon from "antd/es/badge/Ribbon";
 
 const CRUD = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -111,7 +119,7 @@ const CRUD = () => {
       width: 100,
       sorter: (a, b) => a.id - b.id,
     },
-    Table.EXPAND_COLUMN,
+    // Table.EXPAND_COLUMN,
     {
       key: "2",
       title: "Name",
@@ -275,11 +283,28 @@ const CRUD = () => {
     setHoveredRowId(null);
   };
 
+  const defaultCheckedList = columns.map((item) => item.key);
+
+  const [checkedList, setCheckedList] = useState(defaultCheckedList);
+
+  const options = columns
+    .filter(({ key }) => key !== "5")
+    .map(({ key, title }) => ({
+      label: title,
+      value: key,
+    }));
+
+  const newColumns = columns.map((item) => ({
+    ...item,
+    hidden: !checkedList.includes(item.key),
+  }));
+
   return (
-    <div className="Form_CRUD">
+    <div className="Form_CRUD" style={{ width: 1000 }}>
       <Button style={{ marginBottom: 24 }} onClick={() => openModal()}>
         Thêm học sinh mới
       </Button>
+
       <Modal
         title={isEditing ? "Cập nhật học sinh" : "Thêm học sinh mới"}
         open={isModalOpen}
@@ -343,6 +368,21 @@ const CRUD = () => {
         </Form>
       </Modal>
 
+      <Divider>Options Show</Divider>
+      <Checkbox.Group
+        style={{
+          marginBottom: 24,
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+        value={checkedList}
+        options={options}
+        onChange={(value) => {
+          setCheckedList(value);
+        }}
+      />
+
       <Table
         style={{
           display: "flex",
@@ -350,7 +390,7 @@ const CRUD = () => {
           marginBottom: 24,
         }}
         dataSource={students}
-        columns={columns}
+        columns={newColumns}
         rowKey="id"
         onRow={(record) => ({
           onMouseEnter: () => handleRowMouseEnter(record.id),
@@ -387,4 +427,3 @@ const CRUD = () => {
 };
 
 export default CRUD;
-const { Search } = Input;
