@@ -1,15 +1,26 @@
 .App {
   justify-content: center;
   display: flex;
-  text-align: center;
-  padding: 50px;
 }
 
 .table-actions {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 span:hover {
   cursor: pointer;
+}
+.header-search {
+  margin-bottom: 18px;
+}
+.button-actions {
+  display: flex;
+  gap: 12px;
+}
+h2 {
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+.photo-content {
+  padding: 0 20px;
 }

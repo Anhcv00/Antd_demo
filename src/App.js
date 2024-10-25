@@ -1,18 +1,13 @@
-import { useRef, useState } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import "antd/dist/reset.css";
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Photos from "./components/Photos.js";
-import PhotoDetails from "./components/PhotoDetails.js";
+import AppRoutes from "./routers/AppRouter.js";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Routes>
-          <Route path="/" element={<Photos />} />
-          <Route path="/photos/:id" element={<PhotoDetails />} />
-        </Routes>
+        <AppRoutes />
       </Router>
     </div>
   );

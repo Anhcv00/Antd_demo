@@ -1,61 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { fetchPhotos } from "../services/photo.js";
-import { Table, Button, Input, Modal, Form, Image } from "antd";
+import { fetchPhotos } from "../../services/photo.js";
+import { Button, Input, Modal, Form, Image } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
-  SearchOutlined,
+  PlusOutlined,
+  CloudDownloadOutlined,
 } from "@ant-design/icons";
-import styled from "styled-components";
+import EditPhoto from "./EditPhoto.js";
+import AddPhoto from "./AddPhoto.js";
+import PhotoSearch from "./PhotoSearch.js";
 import {
   getPhotosFromStorage,
   savePhotosToStorage,
   deletePhotoFromStorage,
   updatePhotoInStorage,
-} from "./store.js";
+} from "../../store/store.js";
+import { ButtonWrapper, TableWrapper } from "./style.js";
+
 import { useNavigate } from "react-router-dom";
-
-const ButtonWrapper = styled(Button)`
-  width: 200px;
-  height: 40px;
-  &:hover {
-    background-color: #11221f;
-    color: #fff;
-  }
-  transition: background-color 0.3s ease;
-`;
-
-const TableWrapper = styled(Table)`
-  .ant-table-thead > tr > th {
-    background-color: #f0f0f0 !important;
-    color: #333 !important;
-    font-weight: bold !important;
-    text-align: center;
-    background-color: #fff3cf !important;
-    border-right: 1px solid #ddd;
-    &:hover {
-      cursor: pointer;
-      color: red !important;
-    }
-    &:nth-last-child(2) {
-      border: none;
-    }
-  }
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  .ant-table-pagination {
-    padding: 10px !important;
-  }
-`;
-
-const InputSearch = styled(Input)`
-  width: 300px;
-`;
 
 const Photos = () => {
   const [photos, setPhotos] = useState([]);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
   const [hoveredRowId, setHoveredRowId] = useState(null);
   const [filteredPhotos, setFilteredPhotos] = useState(photos);
   const [searchPhoto, setSearchPhoto] = useState("");
@@ -68,7 +34,6 @@ const Photos = () => {
   );
   const [isEditing, setIsEditing] = useState(false);
   const [currentPhoto, setCurrentPhoto] = useState(null);
-  const [form] = Form.useForm();
 
   const navigate = useNavigate();
 
@@ -87,9 +52,12 @@ const Photos = () => {
         console.error("Error fetching photos:", err);
       }
     };
-
     fetchAndStorePhotos();
   }, []);
+
+  useEffect(() => {
+    console.log("Current photo updated:", currentPhoto);
+  }, [currentPhoto]);
 
   const columns = [
     {
@@ -146,15 +114,19 @@ const Photos = () => {
   ];
 
   const openModal = (photo = null) => {
-    setIsEditing(!!photo);
-    setCurrentPhoto(photo);
-    if (!photo) {
-      form.resetFields();
+    if (photo) {
+      setIsEditing(true);
+      setCurrentPhoto(photo);
+    } else {
+      setIsEditing(false);
+      setCurrentPhoto(null);
     }
     setOpenEdit(true);
   };
 
   const showModelEditPhoto = (photo) => {
+    console.log(photo);
+
     openModal(photo);
   };
 
@@ -226,55 +198,31 @@ const Photos = () => {
 
   const handleCancelEdit = () => {
     setOpenEdit(false);
-    setCurrentPhoto(null);
-    setIsEditing(false);
-    form.resetFields();
   };
-
-  const handleOkEdit = (values) => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      if (isEditing) {
-        // Edit
-        const updatedPhoto = { ...currentPhoto, ...values };
-        updatePhoto(updatedPhoto);
-      } else {
-        // Add
-        const newPhoto = {
-          id: photos.length + 1, // Tăng ID
-          ...values,
-        };
-        addPhoto(newPhoto);
-      }
-      setOpenEdit(false);
-      setConfirmLoading(false);
-      setCurrentPhoto(null);
-      form.resetFields();
-    }, 2000);
-  };
-
   const handleRowClick = (record) => {
     navigate(`/photos/${record.id}`, { state: { record } });
   };
 
   return (
-    <div>
-      <h1>Photos Operations</h1>
+    <div className="photo-content">
+      <PhotoSearch
+        value={searchPhoto}
+        placeholder="Search by Title Photos..."
+        onChange={handleInputChange}
+        onSearch={handleSearch}
+      />
+
       <div className="table-actions">
-        <ButtonWrapper type="primary" onClick={() => openModal()}>
-          Add Photo
-        </ButtonWrapper>
-        <InputSearch
-          value={searchPhoto}
-          placeholder="Search by Title Photos..."
-          onChange={handleInputChange}
-          suffix={
-            <SearchOutlined
-              onClick={handleSearch}
-              style={{ color: "rgba(0,0,0,.45)" }}
-            />
-          }
-        />
+        <h2>Danh sách : {photos.length} </h2>
+
+        <div className="button-actions">
+          <ButtonWrapper type="default">
+            <CloudDownloadOutlined /> Download
+          </ButtonWrapper>
+          <ButtonWrapper type="primary" onClick={() => openModal()}>
+            <PlusOutlined /> New Photo
+          </ButtonWrapper>
+        </div>
       </div>
 
       <Modal
@@ -290,37 +238,15 @@ const Photos = () => {
         open={openEdit}
         onCancel={handleCancelEdit}
         footer={null}>
-        <Form
-          form={form}
-          layout="vertical"
-          initialValues={currentPhoto}
-          onFinish={handleOkEdit}>
-          <Form.Item
-            name="title"
-            label="Title"
-            rules={[{ required: true, message: "Please input the title!" }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="url"
-            label="URL"
-            rules={[{ required: true, message: "Please input the URL!" }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="thumbnailUrl"
-            label="Thumbnail URL"
-            rules={[
-              { required: true, message: "Please input the thumbnail URL!" },
-            ]}>
-            <Input />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" loading={confirmLoading}>
-              {isEditing ? "Update" : "Add"}
-            </Button>
-          </Form.Item>
-        </Form>
+        {isEditing ? (
+          <EditPhoto
+            currentPhoto={currentPhoto}
+            onUpdate={updatePhoto}
+            onCancel={handleCancelEdit}
+          />
+        ) : (
+          <AddPhoto onAdd={addPhoto} photos={photos} />
+        )}
       </Modal>
 
       <TableWrapper
@@ -335,14 +261,8 @@ const Photos = () => {
           hoveredRowId === record.id ? "hovered-row" : ""
         }
         pagination={{
-          current: page,
-          pageSize: pageSize,
           showSizeChanger: true,
           pageSizeOptions: ["10", "30", "50"],
-          onChange: (page, pageSize) => {
-            setPage(page);
-            setPageSize(pageSize);
-          },
         }}
       />
     </div>
@@ -350,3 +270,11 @@ const Photos = () => {
 };
 
 export default Photos;
+
+// const handleRowMouseEnter = (id) => {
+//   setHoveredRowId(id);
+// };
+
+// const handleRowMouseLeave = () => {
+//   setHoveredRowId(null);
+// };
