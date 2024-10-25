@@ -14,6 +14,17 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import styled from "styled-components";
+
+const ButtonWrapper = styled(Button)`
+  width: 200px;
+  height: 40px;
+  &:hover {
+    background-color: #11221f;
+    color: #fff;
+  }
+  transition: background-color 0.3s ease;
+`;
 
 const CRUD = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -26,9 +37,9 @@ const CRUD = () => {
   const [form] = Form.useForm();
 
   const ageFilterOptions = [
-    { text: "10-20", value: "10-20" },
-    { text: "20-30", value: "20-30" },
-    { text: ">30", value: ">30" },
+    { text: "10-20", value: 1 },
+    { text: "20-30", value: 2 },
+    { text: ">30", value: 3 },
   ];
 
   const [students, setStudents] = useState([
@@ -192,11 +203,11 @@ const CRUD = () => {
       width: 150,
       filters: ageFilterOptions,
       onFilter: (value, record) => {
-        if (value === "10-20") {
+        if (value === 1) {
           return record.age >= 10 && record.age <= 20;
-        } else if (value === "20-30") {
+        } else if (value === 2) {
           return record.age > 20 && record.age <= 30;
-        } else if (value === ">30") {
+        } else if (value === 3) {
           return record.age > 30;
         }
         return false;
@@ -301,9 +312,12 @@ const CRUD = () => {
 
   return (
     <div className="Form_CRUD" style={{ width: 1000 }}>
-      <Button style={{ marginBottom: 24 }} onClick={() => openModal()}>
+      <ButtonWrapper
+        type="primary"
+        style={{ marginBottom: 24 }}
+        onClick={() => openModal()}>
         Thêm học sinh mới
-      </Button>
+      </ButtonWrapper>
 
       <Modal
         title={isEditing ? "Cập nhật học sinh" : "Thêm học sinh mới"}
@@ -362,9 +376,17 @@ const CRUD = () => {
             <Input placeholder="Nhập mô tả..." />
           </Form.Item>
 
-          <Button htmlType="submit" type="primary" block>
-            {isEditing ? "Cập nhật" : "Thêm mới"}
-          </Button>
+          <div
+            className=""
+            style={{
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "center",
+            }}>
+            <ButtonWrapper htmlType="submit" type="primary">
+              {isEditing ? "Cập nhật" : "Thêm mới"}
+            </ButtonWrapper>
+          </div>
         </Form>
       </Modal>
 

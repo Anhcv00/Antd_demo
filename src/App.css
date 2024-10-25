@@ -5,58 +5,11 @@
   padding: 50px;
 }
 
-.App_header {
-  background-color: #f0f2f5;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.table-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
-
-.App_header h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.ant-form-item {
-  margin-bottom: 16px;
-}
-
-.ant-btn-primary {
-  width: 100%;
-  background-color: #1890ff;
-  border-color: #1890ff;
-  padding: 10px 0;
-  font-size: 16px;
-}
-
-.ant-btn-primary:hover {
-  background-color: #40a9ff;
-  border-color: #40a9ff;
-}
-.ant-alert {
-  margin-bottom: 20px;
-}
-
-.hover-row .action-icons {
-  display: none;
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 16px;
-}
-
-.hover-row:hover .action-icons {
-  display: inline-block;
-}
-
-.ant-table-row {
-  position: relative;
-}
-
-.hovered-row {
-  background-color: #f0f0f0;
-  transition: background-color 0.3s;
+span:hover {
+  cursor: pointer;
 }
