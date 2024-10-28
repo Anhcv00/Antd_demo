@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Table, Input, Menu } from "antd";
+import { Button, Table, Input, Menu, Form } from "antd";
 
 export const ButtonWrapper = styled(Button)`
   width: 120px;
@@ -12,7 +12,7 @@ export const ButtonWrapper = styled(Button)`
 `;
 
 export const TableWrapper = styled(Table)`
-  width: 1000px;
+  width: 1200px;
   height: auto;
   .ant-table-thead > tr > th {
     color: #fff !important;
@@ -45,5 +45,32 @@ export const MenuSibar = styled(Menu)`
   }
   .ant-menu-submenu-title {
     padding-left: 0px !important;
+  }
+`;
+export const FormDetails = styled(Form)`
+  padding: 24px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+`;
+
+// Sign in
+
+export const FormSignIn = styled(Form)`
+  margin: 0 auto;
+  padding: 24px;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  height: auto;
+  width: 500px;
+  .ant-form-item-label {
+    font-weight: bold;
+  }
+`;
+export const FormSignInItem = styled(Form.Item)`
+  span {
+    height: 56px;
+    font-size: 18px;
+    line-height: 56px;
+    align-items: center;
   }
 `;

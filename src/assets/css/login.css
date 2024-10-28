@@ -1,0 +1,59 @@
+/* sign-in */
+.form-sign-in {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.sign-in-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+.sign-in-images {
+  display: flex;
+  justify-content: end;
+  padding: 40px;
+}
+
+.sign-in-images img {
+  width: 500px;
+  height: 500px;
+}
+
+/* sign-up */
+.form-sign-up {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.sign-up-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.sign-up-images {
+  display: flex;
+  justify-content: end;
+  padding: 40px;
+}
+
+.sign-up-images img {
+  width: 500px;
+  height: 500px;
+}
+
+/* Admin */
+/* Table */
+.form-table {
+  background-color: #fff;
+  padding: 40px 0;
+}

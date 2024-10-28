@@ -3,6 +3,8 @@ import { Form, Input, Button, message } from "antd";
 import { savePhotosToStorage } from "../../store/store.js";
 
 const AddPhoto = ({ onAdd, photos }) => {
+  const [form] = Form.useForm();
+
   const onFinish = (values) => {
     setTimeout(() => {
       const newPhoto = {
@@ -11,7 +13,8 @@ const AddPhoto = ({ onAdd, photos }) => {
       };
       onAdd(newPhoto);
       savePhotosToStorage(newPhoto);
-    });
+      form.setFieldsValue(null);
+    }, 500);
     message.success("Thêm mới thành công!");
   };
 

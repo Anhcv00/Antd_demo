@@ -13,7 +13,7 @@ const EditPhoto = ({ currentPhoto, onUpdate, onCancel }) => {
       const updatedPhoto = { ...currentPhoto, ...values };
       onUpdate(updatedPhoto);
       onCancel();
-    }, 1000);
+    }, 500);
     message.success("Cập nhật thành công!");
   };
 
