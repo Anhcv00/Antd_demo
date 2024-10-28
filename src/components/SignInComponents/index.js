@@ -1,5 +1,5 @@
 import React from "react";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { FormSignIn, FormSignInItem } from "../StyleComponents";
 import "../../assets/css/login.css";
@@ -51,7 +51,7 @@ const SignInComponents = () => {
                       message: "Please input your Email!",
                     },
                   ]}>
-                  <Input prefix={<UserOutlined />} placeholder="Email...." />
+                  <Input prefix={<MailOutlined />} placeholder="Email...." />
                 </FormSignInItem>
 
                 <FormSignInItem

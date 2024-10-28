@@ -20,8 +20,8 @@
 }
 
 .sign-in-images img {
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
 }
 
 /* sign-up */
@@ -41,14 +41,19 @@
 }
 
 .sign-up-images {
+  position: relative;
+  bottom: 0;
   display: flex;
-  justify-content: end;
+  /* justify-content: end; */
   padding: 40px;
 }
 
 .sign-up-images img {
-  width: 500px;
-  height: 500px;
+  right: 30px;
+  bottom: 130px;
+  position: absolute;
+  width: 400px;
+  height: 400px;
 }
 
 /* Admin */
@@ -56,4 +61,29 @@
 .form-table {
   background-color: #fff;
   padding: 40px 0;
+}
+.icon-actions {
+  display: flex;
+  line-height: 40px;
+}
+.icon-actions > span {
+  text-align: center;
+  font-size: 24px;
+  margin-right: 64px;
+}
+
+.icon-action {
+  border-left: 1px solid #ddd;
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+.icon-action {
+  font-size: 20px;
+  padding-left: 36px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+.icon-action > span {
+  margin-right: 24px;
 }

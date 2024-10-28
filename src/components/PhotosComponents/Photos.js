@@ -6,6 +6,10 @@ import {
   DeleteOutlined,
   PlusOutlined,
   CloudDownloadOutlined,
+  AreaChartOutlined,
+  PieChartOutlined,
+  UploadOutlined,
+  FallOutlined,
 } from "@ant-design/icons";
 import EditPhoto from "./EditPhoto.js";
 import AddPhoto from "./AddPhoto.js";
@@ -36,26 +40,27 @@ const Photos = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchAndStorePhotos = async () => {
-      try {
-        const storedPhotos = getPhotosFromStorage();
-        if (Array.isArray(storedPhotos) && storedPhotos.length > 0) {
-          setPhotos(storedPhotos);
+  const fetchAndStorePhotos = async () => {
+    try {
+      const storedPhotos = getPhotosFromStorage();
+      if (storedPhotos?.length > 0) {
+        setPhotos(storedPhotos);
+      } else {
+        const data = await fetchPhotos();
+        if (Array.isArray(data)) {
+          setPhotos(data);
+          savePhotosToStorage(data);
         } else {
-          const data = await fetchPhotos();
-          if (Array.isArray(data)) {
-            setPhotos(data);
-            savePhotosToStorage(data);
-          } else {
-            setPhotos([]);
-          }
+          setPhotos([]);
         }
-      } catch (err) {
-        console.error("Error fetching photos:", err);
-        setPhotos([]);
       }
-    };
+    } catch (err) {
+      console.error("Error fetching photos:", err);
+      setPhotos([]);
+    }
+  };
+
+  useEffect(() => {
     fetchAndStorePhotos();
   }, []);
 
@@ -187,17 +192,12 @@ const Photos = () => {
   };
 
   const handleOkDelete = () => {
-    setModalText("Deleted photo successfully!");
     setConfirmLoading(true);
-    setTimeout(() => {
-      if (photoIdToDelete !== null) {
-        handleDelete(photoIdToDelete);
-      }
-      setOpenDelete(false);
-      setConfirmLoading(false);
-      setModalText("Are you sure you want to delete this photo?");
-      setPhotoIdToDelete(null);
-    }, 2000);
+    handleDelete(photoIdToDelete);
+    setOpenDelete(false);
+    setConfirmLoading(false);
+    setModalText("Are you sure you want to delete this photo?");
+    setPhotoIdToDelete(null);
   };
 
   const handleCancel = () => setOpenDelete(false);
@@ -217,7 +217,16 @@ const Photos = () => {
       />
 
       <div className="table-actions">
-        <h2>Danh sách : {photos.length}</h2>
+        <div className="icon-actions">
+          <span>Danh sách : {photos.length}</span>
+          <div className="icon-action">
+            <AreaChartOutlined />
+            <PieChartOutlined />
+            <UploadOutlined />
+            <EditOutlined />
+            <FallOutlined />
+          </div>
+        </div>
         <div className="button-actions">
           <ButtonWrapper type="default">
             <CloudDownloadOutlined /> Download

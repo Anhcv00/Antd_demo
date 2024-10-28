@@ -127,7 +127,7 @@ const SibarMenu = () => {
       </ButtonSibar>
       <MenuSibar
         defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
+        defaultOpenKeys={[""]}
         mode="inline"
         theme="light"
         inlineCollapsed={collapsed}

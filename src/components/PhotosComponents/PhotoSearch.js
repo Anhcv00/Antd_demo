@@ -1,7 +1,7 @@
 import React from "react";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { InputSearch } from "../StyleComponents/index.js";
-import { Avatar, Badge, Space, Dropdown, Menu } from "antd";
+import { Avatar, Badge, Dropdown, Menu } from "antd";
 
 const PhotoSearch = ({ value, onChange, onSearch, placeholder }) => {
   const handleClickUser = ({ key }) => {
@@ -16,7 +16,7 @@ const PhotoSearch = ({ value, onChange, onSearch, placeholder }) => {
   const menu = (
     <Menu onClick={handleClickUser}>
       <Menu.Item key="profile">Profile</Menu.Item>
-      <Menu.Item key="logout">Đăng xuất</Menu.Item>
+      <Menu.Item key="logout">Logout</Menu.Item>
     </Menu>
   );
   return (

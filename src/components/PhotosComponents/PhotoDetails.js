@@ -16,9 +16,7 @@ const PhotoDetails = () => {
       <div className="container">
         <div className="photo-details">
           <div className="photo-details-content">
-            <FormDetails
-              layout="vertical"
-              style={{ width: 600, margin: "0 auto" }}>
+            <FormDetails layout="vertical">
               <h1>Photos for {record.id}</h1>
 
               <Form.Item label="Title">

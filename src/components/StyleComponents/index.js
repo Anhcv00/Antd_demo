@@ -21,7 +21,6 @@ export const TableWrapper = styled(Table)`
     background-color: #1677ff !important;
     &:hover {
       cursor: pointer;
-      color: black !important;
     }
   }
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
@@ -51,6 +50,8 @@ export const FormDetails = styled(Form)`
   padding: 24px;
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
+  width: 600px;
+  margin: 0 auto;
 `;
 
 // Sign in
