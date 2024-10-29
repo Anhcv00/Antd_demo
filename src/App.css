@@ -69,14 +69,15 @@ span:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 64px;
-  margin-bottom: 16px;
-  margin-top: 16px;
+  height: 50px;
+  margin-bottom: 12px;
+  margin-top: 12px;
   background: #001529;
 }
 
 /* Ảnh logo */
 .logo-vertical img {
+  border-radius: 50%;
   max-width: 100%;
   max-height: 100%;
   height: auto;
