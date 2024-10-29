@@ -6,16 +6,16 @@
 .wrapper {
   width: 100%;
   height: 100%;
-  background: #ffefba; /* fallback for old browsers */
+  background: #c9d6ff; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
-    #ffffff,
-    #ffefba
+    #e2e2e2,
+    #c9d6ff
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
-    #ffffff,
-    #ffefba
+    #e2e2e2,
+    #c9d6ff
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -44,12 +44,6 @@ span:hover {
   display: flex;
   gap: 12px;
 }
-h2 {
-  color: rgba(0, 0, 0, 0.88) !important;
-}
-.photo-content {
-  padding: 0 20px;
-}
 /*  */
 
 .photo-details {
@@ -64,4 +58,32 @@ h2 {
   border-radius: 8px;
   overflow: hidden;
   background-color: #fff;
+}
+/* Đặt màu nền cho Sider */
+.ant-layout-sider {
+  background: #001529;
+}
+
+/* Logo */
+.logo-vertical {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  background: #001529;
+}
+
+/* Ảnh logo */
+.logo-vertical img {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  background-color: #001529;
+}
+
+/* Menu */
+.ant-menu {
+  background: #001529;
 }

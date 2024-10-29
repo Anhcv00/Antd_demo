@@ -10,15 +10,16 @@ import { getAccountsFromStorage } from "../../store/store.js";
 const SignInComponents = () => {
   const onFinish = (values) => {
     const acounts = getAccountsFromStorage();
-    console.log("acount store", acounts);
+    console.log("account store", acounts);
     console.log(values);
+
     const matchedAccount = acounts.find(
       (account) =>
         account.email === values.email && account.password === values.password
     );
 
     if (matchedAccount) {
-      localStorage.setItem("isLogin", true);
+      localStorage.setItem("authToken", "sample-token");
       window.location.href = "/photos";
     } else {
       message.error("Tài khoản hoặc mật khẩu không đúng!");

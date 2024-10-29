@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Button, Table, Input, Menu, Form } from "antd";
+import { Header } from "antd/es/layout/layout";
 
 export const ButtonWrapper = styled(Button)`
   width: 120px;
@@ -12,7 +13,6 @@ export const ButtonWrapper = styled(Button)`
 `;
 
 export const TableWrapper = styled(Table)`
-  width: 1200px;
   height: auto;
   .ant-table-thead > tr > th {
     color: #fff !important;
@@ -22,6 +22,9 @@ export const TableWrapper = styled(Table)`
     &:hover {
       cursor: pointer;
     }
+  }
+  tr > td {
+    text-align: center;
   }
   box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -74,4 +77,13 @@ export const FormSignInItem = styled(Form.Item)`
     line-height: 56px;
     align-items: center;
   }
+`;
+// Header layout
+
+export const HeaderLayout = styled(Header)`
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
 `;
