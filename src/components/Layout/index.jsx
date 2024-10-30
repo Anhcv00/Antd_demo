@@ -25,7 +25,9 @@ const ViewPhotosComponents = () => {
       </Sider>
       <Layout>
         <HeaderComponents collapsed={collapsed} setCollapsed={setCollapsed} />
-        <Outlet />
+        <div className="view-content">
+          <Outlet />
+        </div>
         <FooterComponents />
       </Layout>
     </Layout>

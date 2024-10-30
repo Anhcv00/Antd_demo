@@ -30,9 +30,9 @@ const SignInComponents = () => {
         <div className="form-sign-in">
           <div className="sign-in-content">
             {/* Phần hình ảnh bên trái */}
-            <div className="sign-in-images">
+            {/* <div className="sign-in-images">
               <img src={logo} alt="Logo" />
-            </div>
+            </div> */}
             {/* Phần form đăng nhập */}
             <div style={{ padding: "2rem" }}>
               <h1 style={{ textAlign: "center" }}>Login</h1>

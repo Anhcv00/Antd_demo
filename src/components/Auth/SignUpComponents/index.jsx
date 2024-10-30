@@ -38,9 +38,9 @@ const SignUpComponents = () => {
         <div className="form-sign-up">
           <div className="sign-up-content">
             {/* Phần hình ảnh bên trái */}
-            <div className="sign-up-images">
+            {/* <div className="sign-up-images">
               <img src={logo} alt="Logo" />
-            </div>
+            </div> */}
             {/* Phần form đăng nhập */}
             <div style={{ padding: "2rem" }}>
               <h1 style={{ textAlign: "center" }}>Sign Up</h1>

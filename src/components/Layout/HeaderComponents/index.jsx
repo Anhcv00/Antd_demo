@@ -1,10 +1,11 @@
-// HeaderComponents.js
 import React from "react";
 import { Button, Avatar, Badge, Dropdown, Menu } from "antd";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
+  LogoutOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { HeaderLayout } from "../../Style";
@@ -19,13 +20,23 @@ const HeaderComponents = ({ collapsed, setCollapsed }) => {
     } else if (key === "logout") {
       localStorage.removeItem("authToken");
       navigate("/", { replace: true });
+    } else if (key === "setting") {
+      console.log("Go to Settings");
+      navigate("/settings/profile");
     }
   };
 
-  const userMenu = () => (
+  const menu = (
     <Menu onClick={handleClickUser}>
-      <Menu.Item key="profile">Profile</Menu.Item>
-      <Menu.Item key="logout">Logout</Menu.Item>
+      <Menu.Item key="profile" icon={<UserOutlined />}>
+        Profile
+      </Menu.Item>
+      <Menu.Item key="setting" icon={<SettingOutlined />}>
+        Settings
+      </Menu.Item>
+      <Menu.Item key="logout" icon={<LogoutOutlined />}>
+        Logout
+      </Menu.Item>
     </Menu>
   );
 
@@ -37,7 +48,7 @@ const HeaderComponents = ({ collapsed, setCollapsed }) => {
         onClick={() => setCollapsed(!collapsed)}
         style={{ fontSize: "16px", width: 64, height: 64 }}
       />
-      <Dropdown overlay={userMenu()} trigger={["click"]}>
+      <Dropdown overlay={menu} trigger={["click"]}>
         <Badge count={1}>
           <Avatar
             style={{ backgroundColor: "#4096ff", cursor: "pointer" }}

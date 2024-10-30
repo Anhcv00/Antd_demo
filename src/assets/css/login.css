@@ -5,23 +5,12 @@
   align-items: center;
   height: 100vh;
 }
-.sign-in-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #fff;
-}
-.sign-in-images {
-  display: flex;
-  justify-content: end;
-  padding: 40px;
-}
-
-.sign-in-images img {
-  width: 400px;
-  height: 400px;
+.sign-in-content,
+.sign-up-content {
+  border: 2px solid rbga(255, 255, 255, 0.5);
+  border-radius: 20px;
+  background: transparent;
+  backdrop-filter: blur(20px);
 }
 
 /* sign-up */
@@ -30,30 +19,6 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-.sign-up-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #fff;
-}
-
-.sign-up-images {
-  position: relative;
-  bottom: 0;
-  display: flex;
-  /* justify-content: end; */
-  padding: 40px;
-}
-
-.sign-up-images img {
-  right: 30px;
-  bottom: 130px;
-  position: absolute;
-  width: 400px;
-  height: 400px;
 }
 
 /* Admin */

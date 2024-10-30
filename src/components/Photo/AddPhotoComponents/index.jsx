@@ -6,15 +6,15 @@ const AddPhotoComponents = ({ onAdd, photos }) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    setTimeout(() => {
-      const newPhoto = {
-        id: photos.length + 1,
-        ...values,
-      };
-      onAdd(newPhoto);
-      savePhotosToStorage(newPhoto);
-      form.setFieldsValue(null);
-    }, 500);
+    console.log("Adding new photo:", values);
+    const newPhoto = {
+      id: photos.length + 1,
+      ...values,
+    };
+
+    onAdd(newPhoto);
+    savePhotosToStorage(newPhoto);
+    form.resetFields();
     message.success("Thêm mới thành công!");
   };
 

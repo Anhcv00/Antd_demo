@@ -1,11 +1,10 @@
 import React from "react";
-
-const ChangePasswordComponents = () => {
+const DashboardComponents = () => {
   return (
     <div>
-      <h1>ChangePasswordComponents</h1>
+      <h1>DashboardComponents</h1>
     </div>
   );
 };
 
-export default ChangePasswordComponents;
+export default DashboardComponents;
