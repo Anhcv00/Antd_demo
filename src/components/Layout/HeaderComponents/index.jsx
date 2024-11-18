@@ -28,6 +28,7 @@ const HeaderComponents = ({ collapsed, setCollapsed }) => {
 
   const menu = (
     <Menu onClick={handleClickUser}>
+      <Menu.Item disabled={true}>User</Menu.Item>
       <Menu.Item key="profile" icon={<UserOutlined />}>
         Profile
       </Menu.Item>

@@ -87,3 +87,51 @@ span:hover {
 .ant-menu {
   background: #001529;
 }
+
+/*  */
+.slick-dots {
+  margin-bottom: 12px !important;
+}
+
+.ant-carousel .slick-dots li {
+  margin-right: 16px;
+}
+
+.ant-carousel .slick-dots li button {
+  width: 16px;
+  height: 16px;
+  background-color: #bbb;
+  border-radius: 50%;
+}
+
+.ant-carousel .slick-dots .slick-active button {
+  background-color: #717171;
+  width: 32px;
+  height: 16px;
+  border-radius: 60px;
+}
+
+.ant-carousel .slick-dots li:last-child {
+  margin-right: 0;
+}
+/*  */
+
+.marble-race-page {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+/* Ag grid */
+.example-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#myGrid {
+  flex: 1 1 0px;
+  width: 100%;
+}

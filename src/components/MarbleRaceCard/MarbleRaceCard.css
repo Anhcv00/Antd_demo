@@ -1,0 +1,78 @@
+.marble-race-card {
+  background-color: #394b60;
+  border-radius: 10px;
+  overflow: hidden;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.card-image-container {
+  position: relative;
+}
+
+.card-image {
+  width: 400px;
+  height: 230px;
+
+  object-fit: cover;
+}
+
+.status-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
+}
+
+.status-label.waiting {
+  background-color: #ff9f43; /* Màu cam cho trạng thái WAITING */
+}
+
+.status-label.playing {
+  background-color: #1e90ff; /* Màu xanh cho trạng thái PLAYING */
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.prize-info {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 8px 0;
+  line-height: 1.2;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #b0bec5;
+  margin-bottom: 16px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #b0bec5;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+}
+
+.footer-item .anticon {
+  margin-right: 4px;
+}

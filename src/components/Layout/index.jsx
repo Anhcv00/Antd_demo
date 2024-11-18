@@ -9,11 +9,8 @@ import logo from "../../assets/img/logo.png";
 
 import { Outlet } from "react-router-dom";
 const { Sider } = Layout;
-const ViewPhotosComponents = () => {
+const LayoutComponents = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
 
   return (
     <Layout>
@@ -34,4 +31,4 @@ const ViewPhotosComponents = () => {
   );
 };
 
-export default ViewPhotosComponents;
+export default LayoutComponents;

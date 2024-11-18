@@ -87,3 +87,14 @@ export const HeaderLayout = styled(Header)`
   align-items: center;
   background-color: #fff;
 `;
+// DashBoard
+export const StyledIcon = styled.div`
+  color: ${(props) => props.color || "black"};
+  background-color: ${(props) => props.backgroundColor || "transparent"};
+  border-radius: 50%;
+  font-size: 24px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

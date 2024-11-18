@@ -72,7 +72,7 @@ const ViewPhotosComponents = () => {
         title: "ID",
         dataIndex: "id",
         key: "id",
-        sorter: (a, b) => a.id - b.id,
+        // sorter: (a, b) => a.id - b.id,
       },
       {
         title: "Title",
